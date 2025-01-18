@@ -1,0 +1,56 @@
+package game.numberguessing;
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGuessingGame {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        boolean playAgain = true;
+
+        int totalScore = 0; // Track the user's score
+
+        while (playAgain) {
+            int lowerBound = 1;
+            int upperBound = 100;
+            int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+
+            int attempts = 5; // Limit the number of attempts
+            boolean guessedCorrectly = false;
+
+            System.out.println("Guess the number between " + lowerBound + " and " + upperBound + "! You have " + attempts + " attempts.");
+
+            while (attempts > 0) {
+                System.out.print("Enter your guess: ");
+                int userGuess = scanner.nextInt();
+
+                if (userGuess == randomNumber) {
+                    System.out.println("Congratulations! You guessed the correct number!");
+                    guessedCorrectly = true;
+                    totalScore += 10; // Award points for guessing correctly
+                    break;
+                } else if (userGuess > randomNumber) {
+                    System.out.println("Your guess is too high.");
+                } else {
+                    System.out.println("Your guess is too low.");
+                }
+
+                attempts--;
+                System.out.println("Attempts remaining: " + attempts);
+            }
+
+            if (!guessedCorrectly) {
+                System.out.println("Sorry! You've used all your attempts. The correct number was: " + randomNumber);
+            }
+
+            System.out.print("Do you want to play another round? (yes/no): ");
+            String response = scanner.next().trim().toLowerCase();
+            playAgain = response.equals("yes");
+        }
+
+        System.out.println("Your total score is: " + totalScore);
+        System.out.println("Thanks for playing!");
+        scanner.close();
+    }
+}
